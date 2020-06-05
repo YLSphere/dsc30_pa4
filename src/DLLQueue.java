@@ -7,31 +7,27 @@ public class DLLQueue<T> {
     private DoublyLinkedList<T> queue;
 
     public DLLQueue() {
-        /* TODO */
+        queue = new DoublyLinkedList<>();
     }
 
     public int size() {
-        /* TODO */
-        return 0;
+        return queue.size();
     }
 
     public boolean isEmpty() {
-        /* TODO */
-        return false;
+        return queue.isEmpty();
     }
 
     public void enqueue(T data) {
-        /* TODO */
+        queue.add(data);
     }
 
     public T dequeue() {
-        /* TODO */
-        return null;
+        return queue.remove(0);
     }
 
     public T peek() {
-        /* TODO */
-        return null;
+        return queue.get(0);
     }
 
 }

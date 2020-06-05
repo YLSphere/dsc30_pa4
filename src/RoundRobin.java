@@ -9,16 +9,73 @@ public class RoundRobin {
     private int quantum, burstTime, waitTime;
 
     public RoundRobin(Task[] toHandle) {
-        /* TODO */
+        waitlist = new DoublyLinkedList<>();
+        finished = new DoublyLinkedList<>();
+
+        for (Task n : toHandle) {
+            waitlist.add(n);
+        }
+
+        quantum = DEFAULT_QUANTUM;
+        burstTime = 0;
+        waitTime = 0;
+
     }
 
     public RoundRobin(int quantum, Task[] toHandle) {
-        /* TODO */
+        if (quantum < 1 || toHandle == null || toHandle.length == 0) {
+            throw new IllegalArgumentException();
+        }
+        waitlist = new DoublyLinkedList<>();
+        finished = new DoublyLinkedList<>();
+
+        this.quantum = quantum;
+
+        for (Task n : toHandle) {
+            waitlist.add(n);
+        }
+        burstTime = 0;
+        waitTime = 0;
+
     }
 
     public String handleAllTasks() {
-        /* TODO */
-        return null;
+        if (waitlist.isEmpty()) {
+            return TASK_HANDLED;
+        }
+        while (!waitlist.isEmpty()) {
+            Task temp = waitlist.remove(0);
+            for (int n = 0; n < quantum; n++) {
+                if (temp.handleTask()) {
+                    waitTime = waitTime + waitlist.size();
+                    burstTime++;
+                    continue;
+                } else {
+                    break;
+                }
+            }
+
+            if (temp.isFinished()) {
+                finished.add(temp);
+            } else {
+                waitlist.add(temp);
+            }
+        }
+        String finishedString = "All tasks are handled within " + burstTime
+                + " units of burst time and " + waitTime + " units of wait time. The tasks are finished in this order:"
+                + "\n";
+        int sizeFinished = finished.size();
+        for (int n = 0; n < sizeFinished; n++) {
+            Task tempString = finished.remove(0);
+            if (finished.isEmpty()) {
+                finishedString += tempString.toString();
+            } else {
+                finishedString += tempString.toString() + " -> ";
+            }
+
+        }
+
+        return finishedString;
     }
 
     /**

@@ -7,31 +7,33 @@ public class DLLStack<T> {
     private DoublyLinkedList<T> stack;
 
     public DLLStack() {
-        /* TODO */
+        stack = new DoublyLinkedList<>();
     }
 
     public int size() {
-        /* TODO */
-        return 0;
+        return stack.size();
     }
 
     public boolean isEmpty() {
-        /* TODO */
-        return false;
+        return stack.isEmpty();
     }
 
     public void push(T data) {
-        /* TODO */
+        stack.add(data);
     }
 
     public T pop() {
-        /* TODO */
-        return null;
+        if (stack.isEmpty()) {
+            return null;
+        }
+        return stack.remove(stack.size() - 1);
     }
 
     public T peek() {
-        /* TODO */
-        return null;
+        if (stack.isEmpty()) {
+            return null;
+        }
+        return stack.get(stack.size() - 1);
     }
 
 }
